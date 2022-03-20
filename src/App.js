@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Welcome from "./components/Welcome";
+import LoginScreen from "./components/LoginScreen";
+import RegisterScreen from "./components/RegisterScreen";
+import HomeScreen from "./components/HomeScreen";
+import { Routes, Route } from "react-router-dom";
 function App() {
+  const [redirectNow, setRedirectNow] = useState(false);
+  setTimeout(() => setRedirectNow(true), 2000);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        {redirectNow ? (
+          <Route exact path="/" element={<LoginScreen />} />
+        ) : (
+          <Route exact path="/" element={<Welcome />} />
+        )}
+        <Route exact path="/register" element={<RegisterScreen />} />
+        <Route exact path="/login" element={<LoginScreen />} />
+        <Route exact path="/home" element={<HomeScreen />} />
+      </Routes>
+    </>
   );
 }
 
