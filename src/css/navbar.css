@@ -8,3 +8,7 @@
 .text-white {
   color: #ffffff;
 }
+.link-hover:hover {
+  font-weight: bold;
+  cursor: pointer;
+}

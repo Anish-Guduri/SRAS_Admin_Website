@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+// import { doc, setDoc, Timestamp } from "firebase/firestore";
 export const firebaseConfig = {
   apiKey: "AIzaSyA5-YBv8lJv11K7SmcuULBoE0KSvqu8ik8",
   authDomain: "sras-project-3db39.firebaseapp.com",

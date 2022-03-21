@@ -3,11 +3,10 @@ import "../css/registerScreen.css";
 import { Link } from "react-router-dom";
 import { authentication, db } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
-import { Alert } from "react-alert";
+import { setDoc, doc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 export default function RegisterScreen() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,7 +48,7 @@ export default function RegisterScreen() {
               alert(error.message);
             });
           alert("Account created successfully! " + user.displayName);
-          history("/home");
+          navigate("/home");
         })
         .catch((error) => {
           alert(error.message);
@@ -86,7 +85,7 @@ export default function RegisterScreen() {
     }
   }
   function validateConfirmPassword(confirmPassword, password) {
-    if (confirmPassword == password) return true;
+    if (confirmPassword === password) return true;
     else {
       alert("password mismatch");
       return false;
@@ -103,10 +102,10 @@ export default function RegisterScreen() {
       return false;
     }
   }
-  const handleClick = () => {
-    console.log("clicked");
-    console.log(name + " " + email + " " + password);
-  };
+  // const handleClick = () => {
+  //   console.log("clicked");
+  //   console.log(name + " " + email + " " + password);
+  // };
   return (
     <div className="parentDiv">
       <div className="myCard">

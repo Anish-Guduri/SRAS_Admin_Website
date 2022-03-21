@@ -1,6 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import welcomeBackgroundImage from "../img/welcomeBackgroundImage.jpeg";
+import { authentication } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 export default function Welcome() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => {
+      onAuthStateChanged(authentication, (user) => {
+        if (user) {
+          navigate("/home");
+          // ...
+        } else {
+          navigate("/login");
+        }
+      });
+    }, 3000);
+  });
+
   return (
     <div
       style={{

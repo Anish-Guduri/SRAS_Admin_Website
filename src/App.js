@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
+// import Navbar from "./components/Navbar";
 import Welcome from "./components/Welcome";
 import LoginScreen from "./components/LoginScreen";
 import RegisterScreen from "./components/RegisterScreen";
 import HomeScreen from "./components/HomeScreen";
 import { Routes, Route } from "react-router-dom";
+import Account from "./components/Account";
+import About from "./components/About";
 function App() {
-  const [redirectNow, setRedirectNow] = useState(false);
-  setTimeout(() => setRedirectNow(true), 2000);
+  // const [redirectNow, setRedirectNow] = useState(false);
+  // setTimeout(() => setRedirectNow(true), 2000);
   return (
     <>
       <Routes>
-        {redirectNow ? (
-          <Route exact path="/" element={<LoginScreen />} />
-        ) : (
-          <Route exact path="/" element={<Welcome />} />
-        )}
-        <Route exact path="/register" element={<RegisterScreen />} />
+        <Route exact path="/" element={<Welcome />} />
         <Route exact path="/login" element={<LoginScreen />} />
+        <Route exact path="/register" element={<RegisterScreen />} />
         <Route exact path="/home" element={<HomeScreen />} />
+        <Route exact path="/account" element={<Account />} />
+        <Route exact path="/about" element={<About />} />
       </Routes>
     </>
   );
