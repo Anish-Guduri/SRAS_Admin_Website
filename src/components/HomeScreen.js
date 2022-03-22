@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "./Navbar";
+import "../css/home.css";
 export default function HomeScreen() {
+  const [crop, setCrop] = useState("fd");
   return (
-    <div>
+    <div className="">
       <Navbar />
-     home
+      <div className=" container d-flex">
+        <h5>Crop</h5>
+        <input type="text" value={crop} placeholder=" enter crop name" />
+      </div>
     </div>
   );
 }

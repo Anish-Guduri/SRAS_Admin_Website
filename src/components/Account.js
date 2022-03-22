@@ -1,33 +1,69 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import "../css/account.css";
-import { authentication } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { authentication, db } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, setDoc, getDoc, getDocFromCache } from "firebase/firestore";
 export default function Account() {
-  const [name, setName] = useState("ad");
-  const [state, setState] = useState("as");
-  const [district, setDistrict] = useState("ads");
-  const [market, setMarket] = useState("asdsf");
-
+  const [name, setName] = useState("--");
+  const [state, setState] = useState("--");
+  const [district, setDistrict] = useState("--");
+  const [market, setMarket] = useState("--");
+  const [isEnabled, setIsEnabled] = useState("disabled");
+  const [email, setEmail] = useState("");
   useEffect(() => {
-    // await setDoc(doc(db, "", "email"), {
-    //   name: "Los Angeles",
-    //   state: "CA",
-    //   country: "USA",
-    // });
-    // // const cityRef = doc(db, 'cities', 'BJ');
-    // // setDoc(cityRef, { capital: true }, { merge: true });
+    onAuthStateChanged(authentication, (user) => {
+      if (user) {
+        setName(user.displayName);
+        setEmail(user.email);
+      }
+    });
+    // alert(email);
+    fetchUserData();
     // try {
-    //   const docRef = setDoc(doc(db, "users", user.email), {
-    //     email: email,
-    //     name: name,
-    //   });
-    //   console.log("Document written with ID: ", docRef.id);
+    //   const doc = await getDocFromCache(docRef);
+
+    //   // Document was found in the cache. If no cached document exists,
+    //   // an error will be returned to the 'catch' block below.
+    //   alert("Cached document data:", doc.data());
     // } catch (e) {
-    //   console.error("Error adding document: ", e);
+    //   alert("Error getting cached document:", e);
     // }
   }, []);
-
+  const fetchUserData = async () => {
+    const docRef = doc(db, "marketAdmin", "anishguduri@yahoo.com");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data().email);
+      setState(docSnap.data().state);
+      setDistrict(docSnap.data().district);
+      setMarket(docSnap.data().marketName);
+    } else {
+      alert("No such document!");
+    }
+  };
+  const handleEdit = async () => {
+    try {
+      const cityRef = doc(db, "marketAdmin", email);
+      await setDoc(
+        cityRef,
+        {
+          name: name,
+          state: state,
+          district: district,
+          marketName: market,
+        },
+        { merge: true }
+      );
+      console.log("Document written with ID: ");
+      setIsEnabled("disabled");
+      alert("data saved successfully");
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      alert(e);
+      setIsEnabled("disabled");
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -37,10 +73,15 @@ export default function Account() {
         <div className="profileContent">
           <div className="d-flex flex-display">
             <h5>Name</h5>
+            <input type="text" value={name} disabled={isEnabled} />
+          </div>
+          <div className="d-flex flex-display">
+            <h5>Email</h5>
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={email}
+              disabled
+              onChange={(e) => setState(e.target.value)}
             />
           </div>
           <div className="d-flex flex-display">
@@ -48,6 +89,7 @@ export default function Account() {
             <input
               type="text"
               value={state}
+              disabled={isEnabled}
               onChange={(e) => setState(e.target.value)}
             />
           </div>
@@ -56,6 +98,7 @@ export default function Account() {
             <input
               type="text"
               value={district}
+              disabled={isEnabled}
               onChange={(e) => setDistrict(e.target.value)}
             />
           </div>
@@ -64,15 +107,28 @@ export default function Account() {
             <input
               type="text"
               value={market}
+              disabled={isEnabled}
               onChange={(e) => setMarket(e.target.value)}
             />
           </div>
         </div>
+
         <div className="display-btn">
           <button
             type="button"
             className="btn btn-color btn-hover my-3"
-            // onClick={}
+            onClick={() => {
+              handleEdit();
+            }}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className="btn btn-color btn-hover my-3"
+            onClick={() => {
+              setIsEnabled("");
+            }}
           >
             Edit
           </button>

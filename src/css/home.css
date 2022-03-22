@@ -1,3 +1,13 @@
-.bg-green{
-    background-color:#207502;
+.bg-green {
+  background-color: #207502;
+}
+.flex-display {
+  display: flex;
+  margin-top: 12px;
+}
+
+input:focus {
+  outline: none;
+  border-bottom-width: 1px;
+  border-bottom-color: #207502;
 }
