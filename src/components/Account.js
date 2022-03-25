@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import "../css/account.css";
 import { authentication, db } from "../firebase";
@@ -11,33 +11,26 @@ export default function Account() {
   const [market, setMarket] = useState("--");
   const [isEnabled, setIsEnabled] = useState("disabled");
   const [email, setEmail] = useState("");
+  const isFirstRender = useRef(true);
   useEffect(() => {
     onAuthStateChanged(authentication, (user) => {
       if (user) {
-        setName(user.displayName);
         setEmail(user.email);
+        setName(user.displayName);
       }
+      fetchUserData();
     });
-    // alert(email);
-    fetchUserData();
-    // try {
-    //   const doc = await getDocFromCache(docRef);
-
-    //   // Document was found in the cache. If no cached document exists,
-    //   // an error will be returned to the 'catch' block below.
-    //   alert("Cached document data:", doc.data());
-    // } catch (e) {
-    //   alert("Error getting cached document:", e);
-    // }
-  }, []);
+  }, [email]);
   const fetchUserData = async () => {
-    const docRef = doc(db, "marketAdmin", "anishguduri@yahoo.com");
+    // console.log(email + "hi");
+    const docRef = doc(db, "marketAdmin", email);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data().email);
+      // console.log("Document data:", docSnap.data().email);
       setState(docSnap.data().state);
       setDistrict(docSnap.data().district);
       setMarket(docSnap.data().marketName);
+      // alert("hi" + docSnap.data().email);
     } else {
       alert("No such document!");
     }
@@ -57,7 +50,7 @@ export default function Account() {
       );
       console.log("Document written with ID: ");
       setIsEnabled("disabled");
-      alert("data saved successfully");
+      alert("Data saved successfully");
     } catch (e) {
       console.error("Error adding document: ", e);
       alert(e);
@@ -73,16 +66,16 @@ export default function Account() {
         <div className="profileContent">
           <div className="d-flex flex-display">
             <h5>Name</h5>
-            <input type="text" value={name} disabled={isEnabled} />
+            <input
+              type="text"
+              value={name}
+              disabled={isEnabled}
+              onChange={(e) => setName(e.target.value)}
+            />
           </div>
           <div className="d-flex flex-display">
             <h5>Email</h5>
-            <input
-              type="text"
-              value={email}
-              disabled
-              onChange={(e) => setState(e.target.value)}
-            />
+            <input type="text" value={email} disabled />
           </div>
           <div className="d-flex flex-display">
             <h5>State</h5>
