@@ -13,43 +13,43 @@ import {
   query,
   where,
 } from "firebase/firestore";
-export default function HomeScreen(props) {
-  const [crop, setCrop] = useState("");
+export default function HomeScreen() {
+  // const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
-  // const [minimumPrice, setminimumPrice] = useState(0);
-  // const [slotsAvailable, setSlotsAvailable] = useState(0);
-
   const data = [];
-
+  const [numChildren, setNumChildren] = useState(0);
+  const children = [];
   useEffect(() => {
     onAuthStateChanged(authentication, (user) => {
       if (user) {
         setEmail(user.email);
       }
     });
-
     bookSlot();
   }, [email]);
+
   const bookSlot = async () => {
     const docsSnap = await getDocs(
       collection(db, `marketAdmin/${email}/crops`)
     );
-
     docsSnap.forEach((doc) => {
       console.log(doc.data());
       data.push(doc.data());
     });
-    console.log(data[0].slotsAvilable);
+    console.log(data[0].cropName);
+    // setNumChildren(data.length);
+    // const onAddChild = () => {
+    //   setNumChildren(data.length);
+    //   console.log(data.length + "  " + numChildren);
+    // };
+    for (let i = 0; i < data.length; i += 1) {
+      // children.push(<CropContent key={i} />);
+      children.push(<h4>Hello {i}</h4>);
+      console.log("hello" + data.length);
+    }
   };
-  const [numChildren, setNumChildren] = useState(data.length);
-  const children = [];
-  console.log(data.length);
-  for (let i = 0; i < numChildren; i += 1) {
-    children.push(<CropContent crop={data[i].crop} />);
-  }
-  const onAddChild = () => {
-    setNumChildren(numChildren + 1);
-  };
+  // console.log(data.length + "  " + numChildren);
+
   return (
     <div>
       <Navbar />
@@ -59,9 +59,9 @@ export default function HomeScreen(props) {
           <button
             type="button"
             className="btn btn-color btn-hover my-3"
-            onClick={() => {
-              onAddChild();
-            }}
+            // onClick={() => {
+            //   onAddChild();
+            // }}
           >
             Add crop
           </button>

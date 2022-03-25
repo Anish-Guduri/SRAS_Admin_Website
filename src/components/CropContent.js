@@ -11,6 +11,8 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
+import PropTypes from "prop-types";
+
 export default function CropContent(props) {
   const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
@@ -71,7 +73,7 @@ export default function CropContent(props) {
           <h6>Minimum Price Offered</h6>
           <input
             type="number"
-            value={minimumPrice}
+            value={props.minimumPrice}
             onChange={(e) => setminimumPrice(e.target.value)}
             disabled={isEditEnabled}
             style={{ marginRight: 0 }}
@@ -80,7 +82,7 @@ export default function CropContent(props) {
           <h6>Slots Available</h6>
           <input
             type="number"
-            value={slotsAvailable}
+            value={props.slotsAvailable}
             disabled={isEditEnabled}
             onChange={(e) => setSlotsAvailable(e.target.value)}
           />
@@ -110,3 +112,9 @@ export default function CropContent(props) {
     </div>
   );
 }
+// CropContent.propTypes = {
+//   crop: PropTypes.string.isRequired,
+// };
+// CropContent.defaultProps = {
+//   crop: "Enter your text",
+// };
