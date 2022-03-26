@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Navbar from "./Navbar";
 import CropContent from "./CropContent";
+import ReadCropData from "./ReadCropData";
+import EditableCropData from "./EditableCropData";
 import "../css/homeScreen.css";
 import { authentication, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import {
   collection,
   doc,
+  setDoc,
   updateDoc,
   getDoc,
   getDocs,
@@ -16,65 +19,105 @@ import {
 export default function HomeScreen() {
   // const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
-  const data = [];
-  const [numChildren, setNumChildren] = useState(0);
-  const children = [];
+  const [data, setData] = useState([]);
+  const [editData, setEditData] = useState("");
+  const [cropName, setCropName] = useState("");
+  const [minimumPrice, setMinimumPrice] = useState();
+  const [slotsAvailable, setSlotsAvailable] = useState(0);
+  const cropData = [];
+
   useEffect(() => {
     onAuthStateChanged(authentication, (user) => {
       if (user) {
         setEmail(user.email);
       }
     });
-    bookSlot();
+    fetchCropData();
   }, [email]);
 
-  const bookSlot = async () => {
+  const fetchCropData = async () => {
     const docsSnap = await getDocs(
       collection(db, `marketAdmin/${email}/crops`)
     );
     docsSnap.forEach((doc) => {
-      console.log(doc.data());
-      data.push(doc.data());
+      // console.log(doc.data());
+      cropData.push(doc.data());
     });
-    console.log(data[0].cropName);
-    // setNumChildren(data.length);
-    // const onAddChild = () => {
-    //   setNumChildren(data.length);
-    //   console.log(data.length + "  " + numChildren);
-    // };
-    for (let i = 0; i < data.length; i += 1) {
-      // children.push(<CropContent key={i} />);
-      children.push(<h4>Hello {i}</h4>);
-      console.log("hello" + data.length);
-    }
+    console.log(cropData);
+    setData(cropData);
+    // console.log(cropData[0].cropName + " " + cropData.length);
   };
-  // console.log(data.length + "  " + numChildren);
 
+  const handleUpdateCropDataClick = (element) => {
+    const cropRef = doc(db, "marketAdmin", email, "crops", element.cropName);
+    setDoc(
+      cropRef,
+      {
+        minimumPrice: minimumPrice,
+        slotsAvilable: slotsAvailable,
+      },
+      { merge: true }
+    );
+    setEditData("");
+    setSlotsAvailable();
+
+    alert("Data Updated Succesfully");
+    fetchCropData();
+  };
+
+  const handleEditClick = (element) => {
+    setEditData(element.cropName);
+    setMinimumPrice(element.minimumPrice);
+    setSlotsAvailable(element.slotsAvilable);
+  };
+  const handleCancelClick = () => {
+    alert("clciked");
+    setEditData("");
+  };
   return (
     <div>
       <Navbar />
       <div className="crop-container">
-        {children}
+        <table className="app-container">
+          <thead>
+            <tr>
+              <th className="text-white">Crop</th>
+              <th className="text-white">Minimum Price</th>
+              <th className="text-white">Maximum Price</th>
+              <th className="text-white">Slots Available</th>
+              <th className="text-white">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((element) => (
+              <Fragment>
+                {editData === element.cropName ? (
+                  <EditableCropData
+                    element={element}
+                    // setCropName={setCropName}
+                    setMinimumPrice={setMinimumPrice}
+                    minimumPrice={minimumPrice}
+                    slotsAvailable={slotsAvailable}
+                    setSlotsAvailable={setSlotsAvailable}
+                    handleUpdateCropDataClick={handleUpdateCropDataClick}
+                    handleCancelClick={handleCancelClick}
+                  />
+                ) : (
+                  <ReadCropData
+                    element={element}
+                    handleEditClick={handleEditClick}
+                    // handleCancelClick={handleCancelClick}
+                  />
+                )}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+
+        <div style={{ marginTop: 24 }}></div>
         <div>
-          <button
-            type="button"
-            className="btn btn-color btn-hover my-3"
-            // onClick={() => {
-            //   onAddChild();
-            // }}
-          >
+          <button type="button" className="btn btn-color btn-hover my-3">
             Add crop
-          </button>
-        </div>
-        <div>
-          <button
-            type="button"
-            className="btn btn-color btn-hover my-3"
-            onClick={() => {
-              bookSlot();
-            }}
-          >
-            Book Slot
           </button>
         </div>
       </div>

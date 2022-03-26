@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import PropTypes from "prop-types";
 
-export default function CropContent(props) {
+export default function CropContent() {
   const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
   const [minimumPrice, setminimumPrice] = useState(0);
@@ -65,7 +65,7 @@ export default function CropContent(props) {
           <h6>Crop</h6>
           <input
             type="text"
-            value={props.crop}
+            value={crop}
             disabled={isCropEditEnabled}
             placeholder="Enter crop name"
             onChange={(e) => setCrop(e.target.value)}
@@ -73,7 +73,7 @@ export default function CropContent(props) {
           <h6>Minimum Price Offered</h6>
           <input
             type="number"
-            value={props.minimumPrice}
+            value={minimumPrice}
             onChange={(e) => setminimumPrice(e.target.value)}
             disabled={isEditEnabled}
             style={{ marginRight: 0 }}
@@ -82,7 +82,7 @@ export default function CropContent(props) {
           <h6>Slots Available</h6>
           <input
             type="number"
-            value={props.slotsAvailable}
+            value={slotsAvailable}
             disabled={isEditEnabled}
             onChange={(e) => setSlotsAvailable(e.target.value)}
           />

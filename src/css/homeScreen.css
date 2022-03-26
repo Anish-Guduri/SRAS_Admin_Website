@@ -59,3 +59,55 @@ input:focus {
   background-color: #207502;
   color: white;
 }
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: "center";
+  gap: 10px;
+  padding: 1rem;
+}
+.text-white {
+  color: #fff;
+}
+.text-brown {
+  color: rgb(109, 59, 2);
+  font-weight: 700;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #ffffff;
+  text-align: left;
+  width: 16vw;
+  padding-top: 1px;
+  padding-bottom: 8px;
+  padding-left: 32px;
+  padding-right: 0px;
+  font-size: 16px;
+}
+
+th {
+  background-color: #207502;
+}
+
+td {
+  background-color: rgb(186, 236, 165);
+}
+
+/* form {
+  display: flex;
+  gap: 5px;
+}
+
+form td:last-child {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+form * {
+  font-size: 28px;
+} */

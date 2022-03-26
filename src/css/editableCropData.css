@@ -1,0 +1,13 @@
+.editableInput {
+  width: 12vw;
+  height: 6vh;
+  font-size: 14px;
+  border-width: 0px;
+  background-color: transparent;
+}
+.editableInput:focus {
+  outline: none;
+  font-size: 14px;
+  border-bottom-width: 1px;
+  border-bottom-color: #207502;
+}

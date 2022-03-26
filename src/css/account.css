@@ -25,13 +25,13 @@ h5 {
   display: flex;
   margin-top: 12px;
 }
-input {
-  width: 16vw;
+.input {
+  width: 18vw;
   height: 6vh;
   border-width: 0px;
   background-color: transparent;
 }
-input:focus {
+.input:focus {
   outline: none;
   border-bottom-width: 1px;
   border-bottom-color: #207502;

@@ -67,6 +67,7 @@ export default function Account() {
           <div className="d-flex flex-display">
             <h5>Name</h5>
             <input
+              className="input"
               type="text"
               value={name}
               disabled={isEnabled}
@@ -75,11 +76,12 @@ export default function Account() {
           </div>
           <div className="d-flex flex-display">
             <h5>Email</h5>
-            <input type="text" value={email} disabled />
+            <input className="input" type="text" value={email} disabled />
           </div>
           <div className="d-flex flex-display">
             <h5>State</h5>
             <input
+              className="input"
               type="text"
               value={state}
               disabled={isEnabled}
@@ -89,6 +91,7 @@ export default function Account() {
           <div className="d-flex flex-display">
             <h5>District</h5>
             <input
+              className="input"
               type="text"
               value={district}
               disabled={isEnabled}
@@ -98,6 +101,7 @@ export default function Account() {
           <div className="d-flex flex-display">
             <h5>Market Name</h5>
             <input
+              className="input"
               type="text"
               value={market}
               disabled={isEnabled}
