@@ -11,3 +11,23 @@
   border-bottom-width: 1px;
   border-bottom-color: #207502;
 }
+.action-column {
+  width: 18vw;
+  margin-left: 0px;
+}
+.table-btn {
+  margin: 12px;
+  /* margin-bottom: 12px; */
+  border-style: solid;
+  width: 6vw;
+  padding: 4px;
+  border-color: #207502;
+  border-radius: 12px;
+}
+.table-btn:hover {
+  width: 6vw;
+  padding: 4px;
+  border-radius: 12px;
+  color: white;
+  background-color: #207502;
+}

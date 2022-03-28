@@ -97,7 +97,9 @@ th {
 td {
   background-color: rgb(186, 236, 165);
 }
-
+.action-column {
+  width: 18vw;
+}
 /* form {
   display: flex;
   gap: 5px;

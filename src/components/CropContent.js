@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import PropTypes from "prop-types";
 
-export default function CropContent() {
+export default function CropContent({ setIsAddCrop }) {
   const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
   const [minimumPrice, setminimumPrice] = useState(0);
@@ -48,6 +48,7 @@ export default function CropContent() {
       alert("Data saved successfully");
       setIsCropEditEnabled(true);
       setIsEditEnabled(true);
+      setIsAddCrop(false);
     } catch (e) {
       console.error("Error adding document: ", e);
       alert(e);
@@ -65,7 +66,9 @@ export default function CropContent() {
           <h6>Crop</h6>
           <input
             type="text"
+            className="input"
             value={crop}
+            className="input"
             disabled={isCropEditEnabled}
             placeholder="Enter crop name"
             onChange={(e) => setCrop(e.target.value)}
@@ -73,6 +76,7 @@ export default function CropContent() {
           <h6>Minimum Price Offered</h6>
           <input
             type="number"
+            className="input"
             value={minimumPrice}
             onChange={(e) => setminimumPrice(e.target.value)}
             disabled={isEditEnabled}
@@ -82,6 +86,7 @@ export default function CropContent() {
           <h6>Slots Available</h6>
           <input
             type="number"
+            className="input"
             value={slotsAvailable}
             disabled={isEditEnabled}
             onChange={(e) => setSlotsAvailable(e.target.value)}

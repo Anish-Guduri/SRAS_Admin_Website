@@ -13,6 +13,7 @@ import {
   updateDoc,
   getDoc,
   getDocs,
+  deleteDoc,
   query,
   where,
 } from "firebase/firestore";
@@ -24,6 +25,7 @@ export default function HomeScreen() {
   const [cropName, setCropName] = useState("");
   const [minimumPrice, setMinimumPrice] = useState();
   const [slotsAvailable, setSlotsAvailable] = useState(0);
+  const [isAddCrop, setIsAddCrop] = useState(false);
   const cropData = [];
 
   useEffect(() => {
@@ -70,6 +72,17 @@ export default function HomeScreen() {
     setMinimumPrice(element.minimumPrice);
     setSlotsAvailable(element.slotsAvilable);
   };
+
+  const handleDeleteCrop = async (element) => {
+    alert("Delete Clicked Successfully");
+    await deleteDoc(doc(db, "marketAdmin", email, "crops", element.cropName));
+    fetchCropData();
+  };
+
+  const hanldeAddCrop = () => {
+    setIsAddCrop(true);
+  };
+
   const handleCancelClick = () => {
     alert("clciked");
     setEditData("");
@@ -85,7 +98,7 @@ export default function HomeScreen() {
               <th className="text-white">Minimum Price</th>
               <th className="text-white">Maximum Price</th>
               <th className="text-white">Slots Available</th>
-              <th className="text-white">Actions</th>
+              <th className="text-white action-column">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -94,7 +107,6 @@ export default function HomeScreen() {
                 {editData === element.cropName ? (
                   <EditableCropData
                     element={element}
-                    // setCropName={setCropName}
                     setMinimumPrice={setMinimumPrice}
                     minimumPrice={minimumPrice}
                     slotsAvailable={slotsAvailable}
@@ -106,7 +118,7 @@ export default function HomeScreen() {
                   <ReadCropData
                     element={element}
                     handleEditClick={handleEditClick}
-                    // handleCancelClick={handleCancelClick}
+                    handleDeleteCrop={handleDeleteCrop}
                   />
                 )}
               </Fragment>
@@ -116,9 +128,19 @@ export default function HomeScreen() {
 
         <div style={{ marginTop: 24 }}></div>
         <div>
-          <button type="button" className="btn btn-color btn-hover my-3">
-            Add crop
-          </button>
+          {isAddCrop ? (
+            <button
+              type="button"
+              className="btn btn-color btn-hover my-3"
+              onClick={() => {
+                hanldeAddCrop();
+              }}
+            >
+              Add crop
+            </button>
+          ) : (
+            <CropContent setIsAddCrop={setIsAddCrop} />
+          )}
         </div>
       </div>
     </div>
