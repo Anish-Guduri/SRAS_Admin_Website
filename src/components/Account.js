@@ -11,6 +11,7 @@ export default function Account() {
   const [market, setMarket] = useState("--");
   const [isEnabled, setIsEnabled] = useState("disabled");
   const [email, setEmail] = useState("");
+  const [isFocus, setIsFocus] = useState(false);
   const isFirstRender = useRef(true);
   useEffect(() => {
     onAuthStateChanged(authentication, (user) => {
@@ -71,6 +72,7 @@ export default function Account() {
               type="text"
               value={name}
               disabled={isEnabled}
+              // onFocus={isFocus}
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -85,6 +87,7 @@ export default function Account() {
               type="text"
               value={state}
               disabled={isEnabled}
+              // onFocus={setIsFocus(false)}
               onChange={(e) => setState(e.target.value)}
             />
           </div>
@@ -95,6 +98,7 @@ export default function Account() {
               type="text"
               value={district}
               disabled={isEnabled}
+              // onFocus={setIsFocus(false)}
               onChange={(e) => setDistrict(e.target.value)}
             />
           </div>
@@ -105,6 +109,7 @@ export default function Account() {
               type="text"
               value={market}
               disabled={isEnabled}
+              // onFocus={setIsFocus(false)}
               onChange={(e) => setMarket(e.target.value)}
             />
           </div>
@@ -125,6 +130,7 @@ export default function Account() {
             className="btn btn-color btn-hover my-3"
             onClick={() => {
               setIsEnabled("");
+              // setIsFocus(false);
             }}
           >
             Edit

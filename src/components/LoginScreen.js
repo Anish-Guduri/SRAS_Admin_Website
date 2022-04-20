@@ -70,7 +70,7 @@ export default function LoginScreen() {
                       setIsShowPassword(false);
                     }}
                   >
-                    hide
+                    Hide
                   </div>
                 ) : (
                   <div
@@ -79,7 +79,7 @@ export default function LoginScreen() {
                       setIsShowPassword(true);
                     }}
                   >
-                    show
+                    Show
                   </div>
                 )}
               </div>

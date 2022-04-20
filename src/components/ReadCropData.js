@@ -9,7 +9,7 @@ export default function ReadCropData({
     <tr>
       <td className="text-brown">{element.cropName}</td>
       <td className="text-brown">{element.minimumPrice}</td>
-      <td className="text-brown">{element.cropName}</td>
+      {/* <td className="text-brown">{element.cropName}</td> */}
       <td className="text-brown">{element.slotsAvilable}</td>
       <td className="action-column">
         <button

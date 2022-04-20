@@ -96,7 +96,7 @@ export default function HomeScreen() {
             <tr>
               <th className="text-white">Crop</th>
               <th className="text-white">Minimum Price</th>
-              <th className="text-white">Maximum Price</th>
+              {/* <th className="text-white">Maximum Price</th> */}
               <th className="text-white">Slots Available</th>
               <th className="text-white action-column">Actions</th>
             </tr>
@@ -128,7 +128,7 @@ export default function HomeScreen() {
 
         <div style={{ marginTop: 24 }}></div>
         <div>
-          {isAddCrop ? (
+          {!isAddCrop ? (
             <button
               type="button"
               className="btn btn-color btn-hover my-3"
@@ -139,7 +139,10 @@ export default function HomeScreen() {
               Add crop
             </button>
           ) : (
-            <CropContent setIsAddCrop={setIsAddCrop} />
+            <CropContent
+              setIsAddCrop={setIsAddCrop}
+              fetchCropData={fetchCropData}
+            />
           )}
         </div>
       </div>

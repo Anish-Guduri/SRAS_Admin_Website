@@ -22,9 +22,9 @@ h6 {
   margin-right: 12px;
 }
 input {
-  width: 6vw;
+  width: 4vw;
   height: 6vh;
-  margin-right: 16px;
+  margin-right: 8px;
   background-color: transparent;
   color: #207502;
   font-size: large;
@@ -33,6 +33,11 @@ input:focus {
   outline: none;
   border-bottom-width: 1px;
   color: #000;
+}
+.btn-container{
+  margin-left: 8;
+  /* padding:12px; */
+  margin-left: 34;
 }
 .display-btn {
   display: flex;

@@ -28,15 +28,6 @@ const EditableCropData = ({
       <td>
         <input
           className="editableInput"
-          type="text"
-          required="required"
-          placeholder="Enter a maximumPrice..."
-          name="maximumPrice"
-        ></input>
-      </td>
-      <td>
-        <input
-          className="editableInput"
           type="number"
           required="required"
           placeholder="Enter an slots Available..."

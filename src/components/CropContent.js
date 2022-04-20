@@ -13,9 +13,12 @@ import {
 } from "firebase/firestore";
 import PropTypes from "prop-types";
 
-export default function CropContent({ setIsAddCrop }) {
+export default function CropContent({ setIsAddCrop, fetchCropData }) {
   const [crop, setCrop] = useState("");
   const [email, setEmail] = useState("");
+  const [market, setMarket] = useState("");
+  const [state, setState] = useState("");
+  const [district, setDistrict] = useState("");
   const [minimumPrice, setminimumPrice] = useState(0);
   const [slotsAvailable, setSlotsAvailable] = useState(0);
   const [isEditEnabled, setIsEditEnabled] = useState(true);
@@ -26,12 +29,26 @@ export default function CropContent({ setIsAddCrop }) {
         setEmail(user.email);
       }
     });
+    fetchUserData();
     if (crop === "") {
       setIsCropEditEnabled(false);
       setIsEditEnabled(false);
     }
   }, [email]);
-
+  const fetchUserData = async () => {
+    // console.log(email + "hi");
+    const docRef = doc(db, "marketAdmin", email);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      // console.log("Document data:", docSnap.data().email);
+      setState(docSnap.data().state);
+      setDistrict(docSnap.data().district);
+      setMarket(docSnap.data().marketName);
+      // alert("hi" + docSnap.data().email);
+    } else {
+      alert("No such document!");
+    }
+  };
   const handleSave = async () => {
     try {
       const marketRef = doc(db, "marketAdmin", email, "crops", crop);
@@ -41,6 +58,10 @@ export default function CropContent({ setIsAddCrop }) {
           cropName: crop,
           minimumPrice: minimumPrice,
           slotsAvilable: slotsAvailable,
+          email: email,
+          marketName: market,
+          state: state,
+          district: district,
         },
         { merge: true }
       );
@@ -48,16 +69,15 @@ export default function CropContent({ setIsAddCrop }) {
       alert("Data saved successfully");
       setIsCropEditEnabled(true);
       setIsEditEnabled(true);
+      fetchCropData();
       setIsAddCrop(false);
     } catch (e) {
       console.error("Error adding document: ", e);
-      alert(e);
+      alert("Please enter valid Data  " + e);
     }
   };
-  const handleEditEnable = () => {
-    alert("hello");
-    crop === "" ? setIsCropEditEnabled(false) : setIsCropEditEnabled(true);
-    setIsEditEnabled(false);
+  const handleCancel = () => {
+    setIsAddCrop(false);
   };
   return (
     <div>
@@ -68,7 +88,6 @@ export default function CropContent({ setIsAddCrop }) {
             type="text"
             className="input"
             value={crop}
-            className="input"
             disabled={isCropEditEnabled}
             placeholder="Enter crop name"
             onChange={(e) => setCrop(e.target.value)}
@@ -107,10 +126,10 @@ export default function CropContent({ setIsAddCrop }) {
             type="button"
             className="btn btn-color btn-hover my-3"
             onClick={() => {
-              handleEditEnable();
+              handleCancel();
             }}
           >
-            Edit
+            Cancel
           </button>
         </div>
       </div>
