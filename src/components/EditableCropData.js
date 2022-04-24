@@ -10,6 +10,8 @@ const EditableCropData = ({
   cropName,
   handleCancelClick,
   element,
+  date,
+  setDate,
 }) => {
   return (
     <tr>
@@ -17,13 +19,27 @@ const EditableCropData = ({
       <td>
         <input
           className="editableInput"
-          type="text"
+          // type="number"
           required="required"
           placeholder="Enter an minimumPrice"
           name="minimumPrice"
           value={minimumPrice}
-          onChange={(e) => setMinimumPrice(e.target.value)}
+          onChange={(e) => {
+            const re = /^[0-9\b]+$/;
+            if (e.target.value === "" || re.test(e.target.value)) {
+              setMinimumPrice(e.target.value);
+            }
+          }}
         ></input>
+      </td>
+      <td>
+        <input
+          className="editableInput"
+          type="date"
+          name="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
       </td>
       <td>
         <input
@@ -33,7 +49,12 @@ const EditableCropData = ({
           placeholder="Enter an slots Available..."
           name="slotsAvilable"
           value={slotsAvailable}
-          onChange={(e) => setSlotsAvailable(e.target.value)}
+          onChange={(e) => {
+            const re = /^[0-9\b]+$/;
+            if (e.target.value === "" || re.test(e.target.value)) {
+              setSlotsAvailable(e.target.value);
+            }
+          }}
         ></input>
       </td>
       <td>

@@ -26,6 +26,7 @@ export default function HomeScreen() {
   const [minimumPrice, setMinimumPrice] = useState();
   const [slotsAvailable, setSlotsAvailable] = useState(0);
   const [isAddCrop, setIsAddCrop] = useState(false);
+  const [date, setDate] = useState("");
   const cropData = [];
 
   useEffect(() => {
@@ -51,20 +52,30 @@ export default function HomeScreen() {
   };
 
   const handleUpdateCropDataClick = (element) => {
-    const cropRef = doc(db, "marketAdmin", email, "crops", element.cropName);
-    setDoc(
-      cropRef,
-      {
-        minimumPrice: minimumPrice,
-        slotsAvilable: slotsAvailable,
-      },
-      { merge: true }
-    );
-    setEditData("");
-    setSlotsAvailable();
-
-    alert("Data Updated Succesfully");
-    fetchCropData();
+    if (
+      minimumPrice !== "" &&
+      minimumPrice !== "0" &&
+      slotsAvailable !== "" &&
+      date !== ""
+    ) {
+      const cropRef = doc(db, "marketAdmin", email, "crops", element.cropName);
+      setDoc(
+        cropRef,
+        {
+          minimumPrice: minimumPrice,
+          slotsAvilable: slotsAvailable,
+          date: date,
+        },
+        { merge: true }
+      );
+      setEditData("");
+      setSlotsAvailable();
+      setDate();
+      alert("Data Updated Succesfully");
+      fetchCropData();
+    } else {
+      alert("Please Enter valid values");
+    }
   };
 
   const handleEditClick = (element) => {
@@ -84,7 +95,7 @@ export default function HomeScreen() {
   };
 
   const handleCancelClick = () => {
-    alert("clciked");
+    // alert("clciked");
     setEditData("");
   };
   return (
@@ -96,7 +107,7 @@ export default function HomeScreen() {
             <tr>
               <th className="text-white">Crop</th>
               <th className="text-white">Minimum Price</th>
-              {/* <th className="text-white">Maximum Price</th> */}
+              <th className="text-white">Available Date</th>
               <th className="text-white">Slots Available</th>
               <th className="text-white action-column">Actions</th>
             </tr>
@@ -110,9 +121,11 @@ export default function HomeScreen() {
                     setMinimumPrice={setMinimumPrice}
                     minimumPrice={minimumPrice}
                     slotsAvailable={slotsAvailable}
+                    date={date}
                     setSlotsAvailable={setSlotsAvailable}
                     handleUpdateCropDataClick={handleUpdateCropDataClick}
                     handleCancelClick={handleCancelClick}
+                    setDate={setDate}
                   />
                 ) : (
                   <ReadCropData

@@ -9,7 +9,7 @@
   border-radius: 8px; */
 }
 .flex-dispaly {
-  display: flex;
+  /* display: flex; */
   margin-top: 12px;
   width: 80vw;
   padding: 8px;
@@ -17,14 +17,17 @@
   border: 2px solid #207502;
   border-radius: 8px;
 }
+.d-flex{
+  display: flex;
+}
 h6 {
   margin-top: 8px;
   margin-right: 12px;
 }
-input {
-  width: 4vw;
+.input {
+  width: 1vw;
   height: 6vh;
-  margin-right: 8px;
+  margin-right: 6px;
   background-color: transparent;
   color: #207502;
   font-size: large;

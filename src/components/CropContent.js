@@ -21,8 +21,10 @@ export default function CropContent({ setIsAddCrop, fetchCropData }) {
   const [district, setDistrict] = useState("");
   const [minimumPrice, setminimumPrice] = useState(0);
   const [slotsAvailable, setSlotsAvailable] = useState(0);
+  const [date, setDate] = useState("");
   const [isEditEnabled, setIsEditEnabled] = useState(true);
   const [isCropEditEnabled, setIsCropEditEnabled] = useState(true);
+
   useEffect(() => {
     onAuthStateChanged(authentication, (user) => {
       if (user) {
@@ -94,44 +96,66 @@ export default function CropContent({ setIsAddCrop, fetchCropData }) {
           />
           <h6>Minimum Price Offered</h6>
           <input
-            type="number"
+            // type="number"
             className="input"
             value={minimumPrice}
-            onChange={(e) => setminimumPrice(e.target.value)}
+            onChange={(e) => {
+              const re = /^[0-9\b]+$/;
+              if (e.target.value === "" || re.test(e.target.value)) {
+                setminimumPrice(e.target.value);
+              }
+            }}
             disabled={isEditEnabled}
             style={{ marginRight: 0 }}
           />
           <h6>Rs.</h6>
+        </div>
+        <div className="d-flex">
+          <h6>Date</h6>
+          <input
+            className="input"
+            type="date"
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            disabled={isEditEnabled}
+            style={{ marginRight: 0 }}
+          />
           <h6>Slots Available</h6>
           <input
-            type="number"
+            // type="number"
             className="input"
             value={slotsAvailable}
             disabled={isEditEnabled}
-            onChange={(e) => setSlotsAvailable(e.target.value)}
+            onChange={(e) => {
+              const re = /^[0-9\b]+$/;
+              if (e.target.value === "" || re.test(e.target.value)) {
+                setSlotsAvailable(e.target.value);
+              }
+            }}
           />
         </div>
-        <div className="btn-container">
-          <button
-            type="button"
-            className="btn btn-color btn-hover my-3"
-            disabled={isEditEnabled}
-            onClick={() => {
-              handleSave();
-            }}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className="btn btn-color btn-hover my-3"
-            onClick={() => {
-              handleCancel();
-            }}
-          >
-            Cancel
-          </button>
-        </div>
+      </div>
+      <div className="btn-container">
+        <button
+          type="button"
+          className="btn btn-color btn-hover my-3"
+          disabled={isEditEnabled}
+          onClick={() => {
+            handleSave();
+          }}
+        >
+          Save
+        </button>
+        <button
+          type="button"
+          className="btn btn-color btn-hover my-3"
+          onClick={() => {
+            handleCancel();
+          }}
+        >
+          Cancel
+        </button>
       </div>
     </div>
   );
