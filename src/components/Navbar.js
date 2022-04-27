@@ -61,6 +61,15 @@ export default function Navbar() {
                   About
                 </Link>
               </li>
+              <li className="nav-item link-hover">
+                <Link
+                  className="nav-link  text-white "
+                  aria-current="page"
+                  to="/slotdetails"
+                >
+                  Slot Details
+                </Link>
+              </li>
             </ul>
             <div
               className=" d-flex text-white link-hover"
